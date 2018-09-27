@@ -1,6 +1,7 @@
 package info.sjd;
 
 
+@SuppressWarnings("serial")
 public class MyIOException extends Exception {
 
 	public MyIOException() {

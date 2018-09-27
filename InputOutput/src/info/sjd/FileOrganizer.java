@@ -41,7 +41,6 @@ public class FileOrganizer {
 
 		long minTimeInPeriod = cal.getTimeInMillis() - time * 60000L;
 
-		
 		while (sc.hasNextLine()) {
 			String log = sc.nextLine();
 
@@ -49,7 +48,7 @@ public class FileOrganizer {
 				logs += log + "\n";
 			}
 		}
-			fr.close();
+		fr.close();
 		loger.info(logs);
 		logs = "";
 	}
