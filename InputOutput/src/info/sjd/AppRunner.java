@@ -1,39 +1,31 @@
 package info.sjd;
 
-import java.io.IOException;
-import java.util.logging.Level;
+import java.util.List;
 import java.util.logging.Logger;
+
+import info.sjd.service.DeleteOldLog;
+import info.sjd.service.ReadLogsForPeriod;
+import info.sjd.service.WriteToLog;
+import info.sjd.util.ConnectionInfo;
 
 public class AppRunner {
 
 	public static Logger log = Logger.getLogger(AppRunner.class.getName());
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws MyIOException {
 
-		try {
-			FileOrganizer.fileWriter();
-		} catch (IOException e) {
-			log.log(Level.SEVERE, "Exception; ", e.getCause());
-		}
+		// First int - how many logs need to be recorded, boolean - true, if you want
+		// write down, false - overwrite;
+		WriteToLog.fileWriter(10, true);
 
-		try {
-			FileOrganizer.fileReader();
-		} catch (IOException e1) {
-			log.log(Level.SEVERE, "Exception; ", e1.getCause());
+		// Argument in method - minutes, for how long to display the logs;
+		List<ConnectionInfo> readLogsForPeriod = ReadLogsForPeriod.readLogsForPeriod(5);
+		for (ConnectionInfo s : readLogsForPeriod) {
+			log.info(s.connectionInfo());
 		}
-
-		// argument in method - time in minutes;
-		try {
-			FileOrganizer.readLogsForPeriod(5);
-		} catch (IOException e2) {
-			log.log(Level.SEVERE, "Exception; ", e2.getCause());
-		}
-
-		try {
-			FileOrganizer.deleteOldLogs();
-		} catch (IOException e3) {
-			log.log(Level.SEVERE, "Exception; ", e3.getCause());
-		}
+		
+//		Deleted old logs
+		DeleteOldLog.writeOldLog();
 
 	}
 
